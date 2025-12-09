@@ -13,9 +13,7 @@ export default function Docs() {
   const rightColumnRef = useRef<HTMLDivElement>(null);
   
   // Get content based on current path
-  // Handle /docs separately or as a key in the map
   const currentPath = location === "/docs/" ? "/docs" : location; 
-  // Simple matching: find exact match or default to intro
   const pageContent = docsContent[currentPath] || docsContent["/docs"];
 
   // Refs for scroll syncing
@@ -56,7 +54,7 @@ export default function Docs() {
     });
 
     return () => observer.disconnect();
-  }, [pageContent]); // Re-run when content changes
+  }, [pageContent]); 
 
   const handleAiCopy = () => {
     if (!pageContent) return;
@@ -113,7 +111,7 @@ export default function Docs() {
               <section 
                 key={section.id} 
                 id={section.id} 
-                ref={el => sectionRefs.current[section.id] = el}
+                ref={el => { sectionRefs.current[section.id] = el; }}
                 className={`space-y-6 scroll-mt-24 ${index !== 0 ? 'pt-8 border-t border-border/50' : ''}`}
               >
                 <h2 className="text-3xl font-bold text-foreground">{section.title}</h2>
@@ -135,7 +133,7 @@ export default function Docs() {
              {pageContent.sections.map((section) => (
                 <div 
                   key={section.id} 
-                  ref={el => codeRefs.current[section.id] = el}
+                  ref={el => { codeRefs.current[section.id] = el; }}
                   className="space-y-4"
                 >
                   {section.codeBlocks?.map((block, i) => (

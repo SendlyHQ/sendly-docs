@@ -1,4 +1,4 @@
-import { Lock, Sparkles, Zap, Code2, Globe, Shield, Terminal } from "lucide-react";
+import { Lock, Sparkles, Zap, Code2, Globe, Shield, Terminal, Book, Cpu, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export type DocSection = {
@@ -311,6 +311,76 @@ assistants.data.forEach(a => console.log(a.name));`
 }`
           }
         ]
+      }
+    ]
+  },
+
+  // Development
+  "/docs/development": {
+    title: "Development",
+    subtitle: "Tools, libraries, and guides for building with DevDocs.",
+    updatedAt: "Dec 5, 2025",
+    sections: [
+      {
+        id: "sdks",
+        title: "SDKs & Libraries",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              We provide official SDKs for major programming languages to help you integrate faster.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+               <div className="p-4 border border-border rounded-lg bg-card">
+                  <div className="font-bold mb-2 text-primary flex items-center gap-2">
+                     <Terminal className="w-4 h-4" /> Node.js
+                  </div>
+                  <code className="text-xs bg-secondary p-1 rounded">npm install @devdocs/sdk</code>
+               </div>
+               <div className="p-4 border border-border rounded-lg bg-card">
+                  <div className="font-bold mb-2 text-primary flex items-center gap-2">
+                     <Cpu className="w-4 h-4" /> Python
+                  </div>
+                  <code className="text-xs bg-secondary p-1 rounded">pip install devdocs</code>
+               </div>
+            </div>
+          </div>
+        )
+      }
+    ]
+  },
+
+  // API Reference
+  "/docs/api": {
+    title: "API Reference",
+    subtitle: "Complete reference documentation for all DevDocs API endpoints.",
+    updatedAt: "Dec 9, 2025",
+    sections: [
+      {
+        id: "endpoints",
+        title: "All Endpoints",
+        content: (
+          <div className="space-y-4">
+             <p className="text-muted-foreground">
+                Browse our comprehensive API reference.
+             </p>
+             <div className="grid gap-2">
+                <div className="p-3 border border-border rounded flex items-center justify-between hover:bg-secondary/50 cursor-pointer transition-colors">
+                   <div className="flex items-center gap-3">
+                      <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20">POST</Badge>
+                      <span className="font-mono text-sm">/v2/messages</span>
+                   </div>
+                   <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                </div>
+                 <div className="p-3 border border-border rounded flex items-center justify-between hover:bg-secondary/50 cursor-pointer transition-colors">
+                   <div className="flex items-center gap-3">
+                      <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20">GET</Badge>
+                      <span className="font-mono text-sm">/v2/ai/assistants</span>
+                   </div>
+                   <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                </div>
+             </div>
+          </div>
+        )
       }
     ]
   }
