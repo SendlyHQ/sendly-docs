@@ -3,13 +3,16 @@ import { DocsLayout } from "@/components/layout/DocsLayout";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowRight, Lock } from "lucide-react";
+import { Sparkles, ArrowRight, Lock, ToggleLeft, ToggleRight } from "lucide-react";
 import { useLocation, useRoute } from "wouter";
 import { docsContent } from "@/data/docsContent";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function Docs() {
   const [location] = useLocation();
   const [activeSection, setActiveSection] = useState<string>("");
+  const [smartScrollEnabled, setSmartScrollEnabled] = useState(true);
   const rightColumnRef = useRef<HTMLDivElement>(null);
   
   // Get content based on current path
@@ -32,6 +35,8 @@ export default function Docs() {
 
   // Setup intersection observer
   useEffect(() => {
+    if (!smartScrollEnabled) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -41,6 +46,10 @@ export default function Docs() {
             
             const codeBlock = codeRefs.current[id];
             if (codeBlock && rightColumnRef.current) {
+              // Using scrollIntoView with smooth behavior can sometimes be jumpy if 
+              // multiple intersections happen quickly.
+              // For smoother experience, we can use a custom smooth scroll or ensure
+              // we debounce these calls, but the native API is usually fine if not spamming.
               codeBlock.scrollIntoView({ behavior: "smooth", block: "center" });
             }
           }
@@ -54,7 +63,7 @@ export default function Docs() {
     });
 
     return () => observer.disconnect();
-  }, [pageContent]); 
+  }, [pageContent, smartScrollEnabled]); 
 
   const handleAiCopy = () => {
     if (!pageContent) return;
@@ -87,15 +96,28 @@ export default function Docs() {
                   </Badge>
                   <span className="text-sm text-muted-foreground">Updated {pageContent.updatedAt}</span>
                 </div>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="gap-2 text-primary border-primary/20 hover:bg-primary/10 hover:text-primary"
-                  onClick={handleAiCopy}
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Copy for AI
-                </Button>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <Switch 
+                      id="smart-scroll" 
+                      checked={smartScrollEnabled} 
+                      onCheckedChange={setSmartScrollEnabled} 
+                      className="data-[state=checked]:bg-primary"
+                    />
+                    <Label htmlFor="smart-scroll" className="text-xs text-muted-foreground cursor-pointer">
+                      Smart Scroll
+                    </Label>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="gap-2 text-primary border-primary/20 hover:bg-primary/10 hover:text-primary"
+                    onClick={handleAiCopy}
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Copy for AI
+                  </Button>
+                </div>
               </div>
 
               <h1 className="text-5xl font-bold tracking-tight text-foreground font-sans">
