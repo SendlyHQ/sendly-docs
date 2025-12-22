@@ -2144,6 +2144,137 @@ sendly sms send --to +15551234567 --text "Hello!" --json | jq '.id'`,
           },
         ],
       },
+      {
+        id: "webhooks-list",
+        title: "Webhooks: List",
+        content: (
+          <div className="space-y-6">
+            <p className="text-muted-foreground">
+              View all configured webhooks for your account.
+            </p>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <div className="grid grid-cols-12 gap-4 p-4 border-b border-border bg-secondary/30 text-sm font-mono font-bold">
+                <div className="col-span-3">Flag</div>
+                <div className="col-span-2">Short</div>
+                <div className="col-span-7">Description</div>
+              </div>
+              <div className="divide-y divide-border">
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-primary">
+                    --json
+                  </div>
+                  <div className="col-span-2 font-mono text-muted-foreground">
+                    -
+                  </div>
+                  <div className="col-span-7 text-muted-foreground">
+                    Output in JSON format
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+        codeBlocks: [
+          {
+            title: "List Webhooks",
+            language: "bash",
+            code: `# List all webhooks
+sendly webhooks list
+
+# Example output:
+# ID                  URL                                    STATUS    EVENTS
+# whk_abc123def456    https://example.com/webhook            active    message.sent, message.delivered
+# whk_xyz789ghi012    https://myapp.com/api/webhooks/sendly  active    message.failed
+
+# JSON output
+sendly webhooks list --json`,
+          },
+        ],
+      },
+      {
+        id: "webhooks-listen",
+        title: "Webhooks: Listen (Local Tunnel)",
+        content: (
+          <div className="space-y-6">
+            <p className="text-muted-foreground">
+              Receive webhooks on your local development machine using a secure
+              tunnel. This works just like{" "}
+              <code className="bg-secondary px-1 rounded">stripe listen</code>.
+            </p>
+            <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-lg flex gap-3">
+              <Terminal className="w-5 h-5 text-green-500 shrink-0" />
+              <div>
+                <p className="font-semibold text-green-500 text-sm">
+                  Perfect for Local Development
+                </p>
+                <p className="text-sm text-green-500/80 mt-1">
+                  No need to expose your localhost to the internet or deploy to
+                  test webhooks. The CLI creates a secure tunnel that forwards
+                  events to your local server.
+                </p>
+              </div>
+            </div>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <div className="grid grid-cols-12 gap-4 p-4 border-b border-border bg-secondary/30 text-sm font-mono font-bold">
+                <div className="col-span-3">Flag</div>
+                <div className="col-span-2">Short</div>
+                <div className="col-span-7">Description</div>
+              </div>
+              <div className="divide-y divide-border">
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-primary">
+                    --forward
+                  </div>
+                  <div className="col-span-2 font-mono text-muted-foreground">
+                    -f
+                  </div>
+                  <div className="col-span-7 text-muted-foreground">
+                    Local URL to forward webhooks to (default:
+                    http://localhost:3000/webhook)
+                  </div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-primary">
+                    --events
+                  </div>
+                  <div className="col-span-2 font-mono text-muted-foreground">
+                    -e
+                  </div>
+                  <div className="col-span-7 text-muted-foreground">
+                    Comma-separated list of events to listen for
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+        codeBlocks: [
+          {
+            title: "Start Webhook Listener",
+            language: "bash",
+            code: `# Start listener with default settings
+sendly webhooks listen
+
+# Forward to custom local endpoint
+sendly webhooks listen --forward http://localhost:8080/api/webhooks
+
+# Filter specific events
+sendly webhooks listen --events message.delivered,message.failed
+
+# Example output:
+# Webhook listener ready!
+#
+#   Tunnel URL:     https://sendly-abc123.loca.lt
+#   Forwarding to:  http://localhost:3000/webhook
+#   Events:         message.sent, message.delivered, message.failed, message.bounced
+#
+# Ready! Send a message to see events appear here.
+#
+# [2025-01-15 10:30:15] message.sent      msg_abc123  →  200 OK (45ms)
+# [2025-01-15 10:30:18] message.delivered msg_abc123  →  200 OK (32ms)`,
+          },
+        ],
+      },
     ],
   },
 
@@ -3231,228 +3362,6 @@ var message = await client.Messages.SendAsync(new SendMessageRequest
 
 Console.WriteLine($"Message ID: {message.Id}");
 Console.WriteLine($"Status: {message.Status}");`,
-          },
-        ],
-      },
-    ],
-  },
-
-  // ============================================
-  // WEBHOOKS
-  // ============================================
-  "/docs/webhooks": {
-    title: "Webhooks",
-    subtitle: "Receive real-time delivery status notifications.",
-    updatedAt: "Dec 13, 2025",
-    sections: [
-      {
-        id: "overview",
-        title: "Overview",
-        content: (
-          <div className="space-y-6">
-            <p className="text-muted-foreground leading-relaxed">
-              Webhooks allow your application to receive real-time notifications
-              when message events occur, such as delivery confirmations or
-              failures.
-            </p>
-            <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-lg flex gap-3">
-              <Webhook className="w-5 h-5 text-blue-500 shrink-0" />
-              <div>
-                <p className="font-semibold text-blue-500 text-sm">
-                  Setup in Dashboard
-                </p>
-                <p className="text-sm text-blue-500/80 mt-1">
-                  Configure your webhook URL and secret in the Sendly dashboard
-                  under Settings → Webhooks.
-                </p>
-              </div>
-            </div>
-          </div>
-        ),
-      },
-      {
-        id: "events",
-        title: "Event Types",
-        content: (
-          <div className="space-y-4">
-            <div className="border border-border rounded-lg overflow-hidden">
-              <div className="grid grid-cols-12 gap-4 p-4 border-b border-border bg-secondary/30 text-sm font-mono font-bold">
-                <div className="col-span-4">Event Type</div>
-                <div className="col-span-8">Description</div>
-              </div>
-              <div className="divide-y divide-border">
-                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
-                  <div className="col-span-4 font-mono text-primary">
-                    message.sent
-                  </div>
-                  <div className="col-span-8 text-muted-foreground">
-                    Message was sent to the carrier
-                  </div>
-                </div>
-                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
-                  <div className="col-span-4 font-mono text-primary">
-                    message.delivered
-                  </div>
-                  <div className="col-span-8 text-muted-foreground">
-                    Message was delivered to the recipient
-                  </div>
-                </div>
-                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
-                  <div className="col-span-4 font-mono text-primary">
-                    message.failed
-                  </div>
-                  <div className="col-span-8 text-muted-foreground">
-                    Message delivery failed
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ),
-        codeBlocks: [
-          {
-            title: "Webhook Payload",
-            language: "json",
-            code: `{
-  "id": "evt_abc123",
-  "type": "message.delivered",
-  "data": {
-    "message_id": "msg_xyz789",
-    "status": "delivered",
-    "delivered_at": "2025-12-13T10:35:00Z"
-  },
-  "created_at": "2025-12-13T10:35:01Z"
-}`,
-          },
-        ],
-      },
-      {
-        id: "verification",
-        title: "Signature Verification",
-        content: (
-          <div className="space-y-4">
-            <p className="text-muted-foreground">
-              Every webhook request includes an{" "}
-              <code className="bg-secondary px-1 rounded">
-                X-Sendly-Signature
-              </code>{" "}
-              header. Verify this signature to ensure the request came from
-              Sendly.
-            </p>
-            <div className="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg flex gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-500 shrink-0" />
-              <div>
-                <p className="font-semibold text-yellow-500 text-sm">
-                  Security
-                </p>
-                <p className="text-sm text-yellow-500/80 mt-1">
-                  Always verify webhook signatures in production. Never trust
-                  webhook data without verification.
-                </p>
-              </div>
-            </div>
-          </div>
-        ),
-        codeBlocks: [
-          {
-            title: "Signature Format",
-            language: "text",
-            code: `X-Sendly-Signature: sha256=<HMAC-SHA256-of-payload-with-secret>`,
-          },
-          {
-            title: "Manual Verification",
-            language: "typescript",
-            code: `import crypto from 'crypto';
-
-function verifySignature(payload: string, signature: string, secret: string): boolean {
-  const expected = crypto
-    .createHmac('sha256', secret)
-    .update(payload)
-    .digest('hex');
-
-  return crypto.timingSafeEqual(
-    Buffer.from(signature),
-    Buffer.from(\`sha256=\${expected}\`)
-  );
-}`,
-          },
-        ],
-      },
-      {
-        id: "handling",
-        title: "Handling Webhooks",
-        content: (
-          <div className="space-y-4">
-            <p className="text-muted-foreground">
-              Best practices for handling webhooks reliably.
-            </p>
-            <ul className="list-disc list-inside text-muted-foreground space-y-2">
-              <li>
-                <strong>Return 200 quickly</strong> - Process webhooks
-                asynchronously to avoid timeouts
-              </li>
-              <li>
-                <strong>Handle duplicates</strong> - Use message_id to
-                deduplicate events
-              </li>
-              <li>
-                <strong>Retry logic</strong> - We retry failed webhooks
-                (non-2xx) up to 3 times
-              </li>
-              <li>
-                <strong>Verify signatures</strong> - Always verify before
-                processing
-              </li>
-            </ul>
-          </div>
-        ),
-        codeBlocks: [
-          {
-            title: "Complete Example",
-            language: "typescript",
-            code: `import express from 'express';
-import { Webhooks } from '@sendly/node';
-
-const app = express();
-
-// Use raw body for signature verification
-app.post('/webhooks/sendly',
-  express.raw({ type: 'application/json' }),
-  async (req, res) => {
-    const signature = req.headers['x-sendly-signature'] as string;
-    const payload = req.body.toString();
-
-    // Verify signature
-    try {
-      const event = Webhooks.parseEvent(
-        payload,
-        signature,
-        process.env.SENDLY_WEBHOOK_SECRET
-      );
-
-      // Return 200 immediately
-      res.sendStatus(200);
-
-      // Process async
-      await processEvent(event);
-
-    } catch (error) {
-      console.error('Invalid webhook:', error);
-      res.sendStatus(403);
-    }
-  }
-);
-
-async function processEvent(event) {
-  switch (event.type) {
-    case 'message.delivered':
-      await markMessageDelivered(event.data.message_id);
-      break;
-    case 'message.failed':
-      await handleFailedMessage(event.data.message_id, event.data.error);
-      break;
-  }
-}`,
           },
         ],
       },
