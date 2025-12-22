@@ -88,7 +88,10 @@ const SIDE_NAV = [
   },
   {
     title: "Webhooks",
-    items: [{ name: "Overview", href: "/docs/webhooks" }],
+    items: [
+      { name: "Overview", href: "/docs/webhooks" },
+      { name: "Management API", href: "/docs/webhooks/api" },
+    ],
   },
   {
     title: "Reference",
