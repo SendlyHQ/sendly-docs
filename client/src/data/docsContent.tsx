@@ -261,7 +261,7 @@ curl -X POST https://sendly.live/api/v1/messages \\
             code: `<dependency>
   <groupId>com.sendly</groupId>
   <artifactId>sendly-java</artifactId>
-  <version>2.2.0</version>
+  <version>3.0.0</version>
 </dependency>`,
           },
         ],
@@ -2531,7 +2531,7 @@ sendly webhooks listen --events message.delivered,message.failed
     title: "Node.js SDK",
     subtitle: "Official Sendly SDK for Node.js and TypeScript.",
     updatedAt: "Dec 13, 2025",
-    version: "2.2.0",
+    version: "3.0.0",
     sections: [
       {
         id: "installation",
@@ -2826,7 +2826,7 @@ app.post('/webhooks/sendly', express.raw({ type: 'application/json' }), (req, re
     title: "Python SDK",
     subtitle: "Official Sendly SDK for Python with async support.",
     updatedAt: "Dec 13, 2025",
-    version: "2.2.0",
+    version: "3.0.0",
     sections: [
       {
         id: "installation",
@@ -3003,7 +3003,7 @@ def handle_webhook():
     title: "Go SDK",
     subtitle: "Official Sendly SDK for Go.",
     updatedAt: "Dec 13, 2025",
-    version: "2.2.0",
+    version: "3.0.0",
     sections: [
       {
         id: "installation",
@@ -3103,7 +3103,7 @@ if err != nil {
     title: "Java SDK",
     subtitle: "Official Sendly SDK for Java.",
     updatedAt: "Dec 13, 2025",
-    version: "2.2.0",
+    version: "3.0.0",
     sections: [
       {
         id: "installation",
@@ -3122,13 +3122,13 @@ if err != nil {
             code: `<dependency>
     <groupId>com.sendly</groupId>
     <artifactId>sendly-java</artifactId>
-    <version>2.2.0</version>
+    <version>3.0.0</version>
 </dependency>`,
           },
           {
             title: "Gradle",
             language: "groovy",
-            code: `implementation 'com.sendly:sendly-java:2.2.0'`,
+            code: `implementation 'com.sendly:sendly-java:3.0.0'`,
           },
         ],
       },
@@ -3174,7 +3174,7 @@ public class Main {
     title: "Rust SDK",
     subtitle: "Official Sendly SDK for Rust.",
     updatedAt: "Dec 13, 2025",
-    version: "2.2.0",
+    version: "3.0.0",
     sections: [
       {
         id: "installation",
@@ -3241,7 +3241,7 @@ async fn main() -> Result<(), sendly::Error> {
     title: "PHP SDK",
     subtitle: "Official Sendly SDK for PHP.",
     updatedAt: "Dec 13, 2025",
-    version: "2.2.0",
+    version: "3.0.0",
     sections: [
       {
         id: "installation",
@@ -3299,7 +3299,7 @@ echo "Status: " . $message->status . "\\n";`,
     title: "Ruby SDK",
     subtitle: "Official Sendly SDK for Ruby.",
     updatedAt: "Dec 13, 2025",
-    version: "2.2.0",
+    version: "3.0.0",
     sections: [
       {
         id: "installation",
@@ -3359,7 +3359,7 @@ puts "Status: #{message.status}"`,
     title: "C# / .NET SDK",
     subtitle: "Official Sendly SDK for C# and .NET.",
     updatedAt: "Dec 13, 2025",
-    version: "2.2.0",
+    version: "3.0.0",
     sections: [
       {
         id: "installation",
