@@ -3,7 +3,7 @@ import { DocsLayout } from "@/components/layout/DocsLayout";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowRight, Lock, ToggleLeft, ToggleRight } from "lucide-react";
+import { Sparkles, ArrowRight, Lock, ToggleLeft, ToggleRight, Check } from "lucide-react";
 import { useLocation, useRoute } from "wouter";
 import { docsContent } from "@/data/docsContent";
 import { Switch } from "@/components/ui/switch";
@@ -13,6 +13,7 @@ export default function Docs() {
   const [location] = useLocation();
   const [activeSection, setActiveSection] = useState<string>("");
   const [smartScrollEnabled, setSmartScrollEnabled] = useState(false);
+  const [aiCopied, setAiCopied] = useState(false);
   const rightColumnRef = useRef<HTMLDivElement>(null);
   
   // Get content based on current path
@@ -75,6 +76,8 @@ export default function Docs() {
     `;
     
     navigator.clipboard.writeText(summary);
+    setAiCopied(true);
+    setTimeout(() => setAiCopied(false), 2000);
   };
 
   if (!pageContent) return null;
@@ -97,7 +100,7 @@ export default function Docs() {
                   <span className="text-sm text-muted-foreground">Updated {pageContent.updatedAt}</span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
+                  <div className="hidden xl:flex items-center gap-2">
                     <Switch 
                       id="smart-scroll" 
                       checked={smartScrollEnabled} 
@@ -111,11 +114,20 @@ export default function Docs() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="gap-2 text-primary border-primary/20 hover:bg-primary/10 hover:text-primary"
+                    className={`gap-2 border-primary/20 hover:bg-primary/10 ${aiCopied ? 'text-green-500 border-green-500/20' : 'text-primary hover:text-primary'}`}
                     onClick={handleAiCopy}
                   >
-                    <Sparkles className="w-3.5 h-3.5" />
-                    Copy for AI
+                    {aiCopied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5" />
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Copy for AI
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>
@@ -140,6 +152,31 @@ export default function Docs() {
                 <div className="text-foreground/90">
                   {section.content}
                 </div>
+                {/* Inline code blocks for smaller screens (hidden on xl where right panel shows) */}
+                {section.codeBlocks && section.codeBlocks.length > 0 && (
+                  <div className="xl:hidden mt-6 space-y-4 bg-[#050505] rounded-lg p-4 border border-border">
+                    {section.codeBlocks.map((block, i) => (
+                      <div key={i} className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                            {block.title}
+                          </span>
+                          <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/20">
+                            {block.language}
+                          </Badge>
+                        </div>
+                        <CodeBlock 
+                          filename={block.filename}
+                          language={block.language}
+                          code={block.code}
+                        />
+                        {block.description && (
+                          <p className="text-xs text-muted-foreground italic">{block.description}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </section>
             ))}
 
@@ -156,7 +193,7 @@ export default function Docs() {
                 <div 
                   key={section.id} 
                   ref={el => { codeRefs.current[section.id] = el; }}
-                  className="space-y-4"
+                  className={`space-y-4 transition-all duration-300 ${activeSection === section.id ? 'opacity-100' : 'opacity-40'}`}
                 >
                   {section.codeBlocks?.map((block, i) => (
                     <div key={i} className="space-y-4 pt-4">
