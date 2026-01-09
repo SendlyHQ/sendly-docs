@@ -1,0 +1,308 @@
+# Toll-Free Verification Guide
+
+Complete your US & Canada SMS verification to send messages to American and Canadian phone numbers.
+
+---
+
+## Why Verification is Required
+
+US wireless carriers require all toll-free numbers used for SMS/MMS to complete verification. This protects consumers from spam and ensures legitimate businesses can reach their customers.
+
+**What to expect:**
+- Verification typically takes 1-5 business days
+- You'll receive email updates on your status
+- Once approved, you can immediately send to US/Canada numbers
+
+---
+
+## Step 1: Business Information
+
+### Business Name
+Enter your **legal business name** exactly as registered with your government.
+
+**Good examples:**
+- Acme Corporation Inc.
+- Smith & Associates LLC
+- TechStart Solutions Ltd
+
+**Avoid:**
+- Nicknames or abbreviations (use "International Business Machines" not "IBM")
+- Marketing names that differ from legal name
+
+### Doing Business As (DBA) - Optional
+If you operate under a different name than your legal name, enter it here.
+
+**Example:** Legal name "John Smith Enterprises LLC" but you operate as "QuickShip Delivery"
+
+### Website
+Enter your business website URL including https://
+
+**Requirements:**
+- Must be a live, accessible website
+- Should clearly show your business name
+- Must match the business you're registering
+
+**Good:** https://www.acmecorp.com
+**Bad:** acmecorp.com (missing https://)
+
+### Business Address
+Enter your actual business address. PO Boxes are generally not accepted.
+
+- **Street Address:** Physical location (e.g., "123 Main Street, Suite 400")
+- **City:** Full city name (e.g., "San Francisco")
+- **State:** Full state name, not abbreviation (e.g., "California" not "CA")
+- **ZIP Code:** 5-digit or 9-digit format (e.g., "94102" or "94102-1234")
+- **Country:** Select from dropdown (US, CA, etc.)
+
+---
+
+## Step 2: Business Registration
+
+Starting January 2026, business registration details are **required** for all toll-free verifications.
+
+### Registration Type
+
+| Type | Country | Description | Example |
+|------|---------|-------------|---------|
+| EIN | US | Employer Identification Number | 12-3456789 |
+| DUNS | Global | Dun & Bradstreet Number | 123456789 |
+| CRA | Canada | Canada Revenue Agency Business Number | 123456789 |
+| VAT | EU | Value Added Tax ID | GB123456789 |
+| LEI | Global | Legal Entity Identifier | 5493001KJTIIGC8Y1R12 |
+
+### Where to Find Your EIN (US Businesses)
+- IRS EIN confirmation letter (CP 575)
+- Previous tax returns
+- Bank account documents
+- IRS website: irs.gov
+
+### Registration Number Format
+
+**US EIN:** Enter with or without dash
+- 12-3456789 or 123456789
+
+**Canadian BN:** 9 digits
+- 123456789
+
+### Registration Country
+The country that issued your registration (2-letter code).
+- US for American businesses
+- CA for Canadian businesses
+- GB for UK businesses
+
+---
+
+## Step 3: Contact Information
+
+Enter details for the person responsible for this messaging program.
+
+- **First Name:** Your first name
+- **Last Name:** Your last name
+- **Email:** Business email (preferably matching your website domain)
+- **Phone:** Your phone number in E.164 format (e.g., +14155551234)
+
+**Tip:** Using an email that matches your website domain (e.g., john@acmecorp.com for acmecorp.com) increases trust and speeds up approval.
+
+---
+
+## Step 4: Message Details
+
+This is the most important section. Be specific and honest.
+
+### Use Case Category
+Select the category that best describes your messaging:
+
+| Category | Best For |
+|----------|----------|
+| 2FA | Login codes, password resets, security alerts |
+| App Notifications | In-app alerts, status updates |
+| Appointments | Reminders, confirmations, rescheduling |
+| Order Notifications | Shipping updates, delivery alerts |
+| Account Notifications | Balance alerts, payment confirmations |
+| Customer Service | Support responses, ticket updates |
+| Marketing | Promotions, sales, newsletters |
+
+### Use Case Description
+Explain **specifically** what messages you'll send and why.
+
+**Good example:**
+"We send appointment reminders to patients 24 hours before their scheduled
+dental appointments. Messages include the appointment date, time, dentist
+name, and office address. Patients can reply YES to confirm or call our
+office to reschedule."
+
+**Bad example:**
+"We send messages to customers."
+
+**What to include:**
+- WHO receives messages (customers, patients, subscribers)
+- WHAT the messages contain (reminders, codes, alerts)
+- WHEN messages are sent (triggers, frequency)
+- WHY recipients want these messages (value proposition)
+
+### Sample Messages
+Provide 1-3 realistic examples of messages you'll send.
+
+**Good examples:**
+
+"Hi Sarah, this is a reminder of your appointment with Dr. Johnson tomorrow
+at 2:30 PM. Reply YES to confirm or call (555) 123-4567 to reschedule."
+
+"Your order #12345 has shipped! Track your package: https://acme.co/track/12345
+Expected delivery: Dec 15. Reply STOP to opt out."
+
+"Your verification code is 847291. This code expires in 10 minutes.
+Don't share this code with anyone."
+
+**What makes a good sample:**
+- Realistic content (not "test message")
+- Includes opt-out info for marketing (STOP)
+- Shows actual use case
+- Professional tone
+
+### Message Volume
+Select your estimated monthly message volume:
+- 10 - Just starting out
+- 100 - Small business
+- 1,000 - Growing business
+- 10,000 - Established business
+- 100,000+ - High volume
+
+**Tip:** Be realistic. Starting with a lower volume and scaling up is fine.
+
+---
+
+## Step 5: Opt-In Workflow
+
+This section proves you have permission to message people. **This is where most rejections happen.**
+
+### What is Opt-In?
+Opt-in means your recipients have explicitly agreed to receive SMS messages from you. This is legally required (TCPA compliance).
+
+### Describe Your Opt-In Process
+
+**Good example:**
+"Users opt-in during account registration on our website. On the signup form,
+there is a checkbox (unchecked by default) that says 'I agree to receive
+SMS notifications about my orders. Message and data rates may apply.
+Reply STOP to unsubscribe.' Users must check this box to enable SMS.
+We store the timestamp and IP address of consent."
+
+**Bad example:**
+"Users sign up on our website."
+
+### Opt-In Methods by Use Case
+
+**E-commerce / Order Updates:**
+"During checkout, customers enter their phone number and check a box agreeing
+to receive shipping and delivery updates via SMS. The checkbox text reads:
+'Send me SMS updates about my order (optional). Msg & data rates may apply.
+Reply STOP to opt out.'"
+
+**Appointment Reminders:**
+"When booking an appointment online or in-person, patients provide their mobile
+number and sign a consent form that includes: 'I authorize [Business Name] to
+send appointment reminders via text message. Standard message rates apply.
+Text STOP to cancel.'"
+
+**2FA / Security Codes:**
+"Users enable two-factor authentication in their account settings. They enter
+their phone number and verify it by entering a code we send. By completing
+verification, they consent to receive security codes at that number."
+
+**Marketing / Promotions:**
+"Customers text JOIN to our shortcode or enter their number on our website
+popup. They receive a confirmation message: 'Thanks for subscribing to
+Acme deals! ~4 msgs/month. Reply HELP for help, STOP to cancel. Msg&data
+rates may apply.' They must reply YES to confirm."
+
+### Opt-In Proof (Screenshots)
+
+Upload screenshots showing your opt-in process:
+- Website signup form with SMS consent checkbox
+- Mobile app permission screen
+- Paper consent form
+- Text message opt-in confirmation
+
+**Tips:**
+- Highlight the consent checkbox/text
+- Show the full context (not just cropped checkbox)
+- Include your business name in the screenshot
+- PNG or JPG format, under 10MB
+
+---
+
+## Step 6: Compliance URLs
+
+### Privacy Policy URL
+Link to your privacy policy that explains how you handle personal data including phone numbers.
+
+**Must include:**
+- What data you collect (including phone numbers)
+- How you use the data (including SMS messaging)
+- How users can opt out
+- Contact information
+
+### Terms of Service URL
+Link to your terms and conditions.
+
+---
+
+## Common Rejection Reasons & How to Avoid Them
+
+### 1. Vague Use Case Description
+**Rejected:** "We send messages to users"
+**Approved:** "We send appointment reminders to patients 24 hours before their scheduled visits, including date, time, and location details"
+
+### 2. No Clear Opt-In Process
+**Rejected:** "Users give us their phone number"
+**Approved:** "Users check a consent checkbox on signup that says 'I agree to receive SMS notifications. Msg rates may apply. Reply STOP to opt out.'"
+
+### 3. Website Doesn't Match Business
+**Rejected:** Business name "Acme Corp" but website shows "Bob's Shop"
+**Approved:** Business name and website branding match
+
+### 4. Missing Opt-Out Information
+**Rejected:** Sample message with no opt-out mention
+**Approved:** Sample includes "Reply STOP to unsubscribe" or similar
+
+### 5. Sample Messages Don't Match Use Case
+**Rejected:** Use case is "Appointments" but sample is marketing promo
+**Approved:** Use case and samples align perfectly
+
+### 6. Invalid Business Registration
+**Rejected:** EIN format wrong or doesn't match business name
+**Approved:** Valid EIN that matches registered business
+
+---
+
+## After Submission
+
+### Status Updates
+- **Pending** - Submitted, awaiting review
+- **In Progress** - Being reviewed by carrier
+- **Waiting for Customer** - Additional info needed (check email)
+- **Verified** - Approved! You can send messages
+- **Rejected** - See reason and resubmit
+
+### If Rejected
+1. Read the rejection reason carefully
+2. Fix the specific issue mentioned
+3. Resubmit with corrected information
+4. Most rejections are fixable!
+
+### Timeline
+- Simple use cases (2FA, notifications): 1-3 business days
+- Marketing use cases: 3-7 business days
+- Complex or high-volume: Up to 2 weeks
+
+---
+
+## Need Help?
+
+Contact support@sendly.live if you have questions about verification.
+
+Before reaching out, please have ready:
+- Your business name
+- Description of your SMS use case
+- Any error messages you've received

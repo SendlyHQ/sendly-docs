@@ -6096,4 +6096,338 @@ sendly webhooks listen --forward http://localhost:3000/webhook
       },
     ],
   },
+
+  "/docs/concepts/credits": {
+    title: "Credits",
+    subtitle: "Understanding how Sendly's credit-based pricing works.",
+    updatedAt: "Jan 9, 2026",
+    sections: [
+      {
+        id: "what-are-credits",
+        title: "What are Credits?",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Credits are Sendly's universal currency for messaging. Rather than complex per-message pricing that varies by country and carrier, you purchase credits upfront and spend them as you send.
+            </p>
+            <p className="text-muted-foreground">
+              <strong>1 credit = $0.01 USD</strong>. Simple math, predictable costs.
+            </p>
+          </div>
+        ),
+      },
+      {
+        id: "why-credits",
+        title: "Why Credits Instead of Per-Message Pricing?",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Traditional SMS APIs charge different rates for every country, sometimes every carrier. This makes cost prediction nearly impossible for global applications.
+            </p>
+            <p className="text-muted-foreground">
+              With credits, you know exactly what you're spending. The complexity of international routing is abstracted away - you just see credits consumed.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <div className="p-4 border border-border rounded-lg">
+                <div className="font-semibold text-foreground mb-2">Domestic (US/CA)</div>
+                <p className="text-sm text-muted-foreground">1 credit per message</p>
+              </div>
+              <div className="p-4 border border-border rounded-lg">
+                <div className="font-semibold text-foreground mb-2">International</div>
+                <p className="text-sm text-muted-foreground">8-16 credits depending on tier</p>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: "credit-lifecycle",
+        title: "Credit Lifecycle",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Credits flow through a predictable lifecycle:
+            </p>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold shrink-0">1</div>
+                <div>
+                  <p className="font-medium">Purchase</p>
+                  <p className="text-sm text-muted-foreground">Buy credits via dashboard or API. Bonus credits on larger packages.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold shrink-0">2</div>
+                <div>
+                  <p className="font-medium">Reserve (for scheduled messages)</p>
+                  <p className="text-sm text-muted-foreground">Scheduled messages reserve credits immediately to guarantee delivery.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold shrink-0">3</div>
+                <div>
+                  <p className="font-medium">Consume</p>
+                  <p className="text-sm text-muted-foreground">Credits are deducted when the message is sent.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold shrink-0">4</div>
+                <div>
+                  <p className="font-medium">Refund (if cancelled)</p>
+                  <p className="text-sm text-muted-foreground">Cancelled scheduled messages return reserved credits.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: "segments",
+        title: "Message Segments",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              SMS messages longer than 160 characters (or 70 for Unicode) are split into segments. Each segment costs credits.
+            </p>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <div className="divide-y divide-border">
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-6 font-medium">Standard (GSM-7)</div>
+                  <div className="col-span-6 text-muted-foreground">160 chars/segment</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-6 font-medium">Unicode (emojis, non-Latin)</div>
+                  <div className="col-span-6 text-muted-foreground">70 chars/segment</div>
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              A 320-character message = 2 segments = 2x credit cost.
+            </p>
+          </div>
+        ),
+      },
+    ],
+  },
+
+  "/docs/concepts/test-vs-live": {
+    title: "Test vs Live Keys",
+    subtitle: "Understanding Sendly's dual-key system for safe development.",
+    updatedAt: "Jan 9, 2026",
+    sections: [
+      {
+        id: "two-modes",
+        title: "Two Modes, Same API",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Every Sendly account has two types of API keys that determine how the API behaves:
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <div className="p-4 border border-yellow-500/30 bg-yellow-500/5 rounded-lg">
+                <div className="font-mono text-yellow-500 mb-2">sk_test_...</div>
+                <p className="text-sm text-muted-foreground">Sandbox mode. No real SMS sent. No credits charged. Available immediately.</p>
+              </div>
+              <div className="p-4 border border-green-500/30 bg-green-500/5 rounded-lg">
+                <div className="font-mono text-green-500 mb-2">sk_live_...</div>
+                <p className="text-sm text-muted-foreground">Production mode. Real SMS delivered. Credits consumed. Requires verification.</p>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: "sandbox-behavior",
+        title: "Sandbox Behavior",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Test keys enable sandbox mode with special behaviors:
+            </p>
+            <ul className="list-disc list-inside text-muted-foreground space-y-2">
+              <li><strong>No real delivery</strong> - Messages are simulated, never actually sent</li>
+              <li><strong>Magic phone numbers</strong> - Special numbers trigger specific responses</li>
+              <li><strong>OTP codes exposed</strong> - Verification codes returned in API response for testing</li>
+              <li><strong>No credits consumed</strong> - Test freely without cost</li>
+              <li><strong>Lower rate limits</strong> - 60 req/min vs 600 for live</li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        id: "magic-numbers",
+        title: "Magic Phone Numbers",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              In sandbox mode, these phone numbers trigger predictable behaviors for testing:
+            </p>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <div className="divide-y divide-border">
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-mono text-green-500">+15005550000</div>
+                  <div className="col-span-8 text-muted-foreground">Always succeeds</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-mono text-red-500">+15005550001</div>
+                  <div className="col-span-8 text-muted-foreground">Invalid number error</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-mono text-red-500">+15005550002</div>
+                  <div className="col-span-8 text-muted-foreground">Cannot route error</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-mono text-red-500">+15005550003</div>
+                  <div className="col-span-8 text-muted-foreground">Queue full error</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-mono text-red-500">+15005550004</div>
+                  <div className="col-span-8 text-muted-foreground">Rate limited (429)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: "going-live",
+        title: "Going Live",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              To send real messages, you need a live API key. This requires:
+            </p>
+            <ul className="list-disc list-inside text-muted-foreground space-y-2">
+              <li><strong>Business verification</strong> - Confirm your identity and use case</li>
+              <li><strong>Credit balance</strong> - Purchase credits to fund your account</li>
+              <li><strong>For US/CA:</strong> A verified toll-free number (we provide one)</li>
+            </ul>
+            <p className="text-muted-foreground mt-4">
+              Once verified, swap <code className="text-primary">sk_test_</code> for <code className="text-primary">sk_live_</code> in your environment - no code changes needed.
+            </p>
+          </div>
+        ),
+      },
+    ],
+  },
+
+  "/docs/concepts/message-lifecycle": {
+    title: "Message Lifecycle",
+    subtitle: "Understanding how SMS messages flow through Sendly's system.",
+    updatedAt: "Jan 9, 2026",
+    sections: [
+      {
+        id: "overview",
+        title: "From API Call to Delivery",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              When you call the Send SMS endpoint, your message travels through multiple systems before reaching the recipient's phone. Understanding this journey helps you build better applications.
+            </p>
+          </div>
+        ),
+      },
+      {
+        id: "status-flow",
+        title: "Status Flow",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Every message transitions through these statuses:
+            </p>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <div className="divide-y divide-border">
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-yellow-500">queued</div>
+                  <div className="col-span-9 text-muted-foreground">Message accepted, waiting to be processed</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-blue-500">sent</div>
+                  <div className="col-span-9 text-muted-foreground">Message dispatched to carrier network</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-green-500">delivered</div>
+                  <div className="col-span-9 text-muted-foreground">Carrier confirmed delivery to device</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-red-500">failed</div>
+                  <div className="col-span-9 text-muted-foreground">Delivery failed (invalid number, carrier rejected, etc.)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: "timing",
+        title: "Typical Timing",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Most messages complete their journey in seconds:
+            </p>
+            <ul className="list-disc list-inside text-muted-foreground space-y-2">
+              <li><strong>API response:</strong> ~100-200ms (returns queued status)</li>
+              <li><strong>Carrier handoff:</strong> ~1-3 seconds (transitions to sent)</li>
+              <li><strong>Device delivery:</strong> ~1-30 seconds (transitions to delivered)</li>
+            </ul>
+            <p className="text-muted-foreground">
+              International messages may take longer depending on carrier agreements and network conditions.
+            </p>
+          </div>
+        ),
+      },
+      {
+        id: "webhooks",
+        title: "Real-Time Updates via Webhooks",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Rather than polling the API, configure webhooks to receive instant notifications when status changes:
+            </p>
+            <ul className="list-disc list-inside text-muted-foreground space-y-2">
+              <li><code className="text-primary">message.sent</code> - Message dispatched to carrier</li>
+              <li><code className="text-primary">message.delivered</code> - Confirmed delivered</li>
+              <li><code className="text-primary">message.failed</code> - Delivery failed</li>
+              <li><code className="text-primary">message.bounced</code> - Message bounced back</li>
+            </ul>
+            <p className="text-muted-foreground mt-4">
+              See <a href="/docs/webhooks" className="text-primary hover:underline">Webhooks documentation</a> for setup instructions.
+            </p>
+          </div>
+        ),
+      },
+      {
+        id: "failure-reasons",
+        title: "Why Messages Fail",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Common failure reasons:
+            </p>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <div className="divide-y divide-border">
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-medium">Invalid number</div>
+                  <div className="col-span-8 text-muted-foreground">Phone number doesn't exist or is formatted incorrectly</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-medium">Carrier rejected</div>
+                  <div className="col-span-8 text-muted-foreground">Carrier blocked the message (spam filtering, compliance)</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-medium">Unreachable</div>
+                  <div className="col-span-8 text-muted-foreground">Phone is off or out of coverage for extended period</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-4 font-medium">Landline</div>
+                  <div className="col-span-8 text-muted-foreground">Number is a landline that can't receive SMS</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+    ],
+  },
 };

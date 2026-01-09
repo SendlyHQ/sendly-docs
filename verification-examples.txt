@@ -1,0 +1,361 @@
+# Toll-Free Verification Examples
+
+Real examples of good vs bad form submissions to help you get approved.
+
+---
+
+## Business Name Examples
+
+### GOOD
+- Acme Corporation Inc.
+- Johnson & Smith Legal Services LLC
+- TechStart Solutions Ltd
+- Mary's Bakery
+- 123 Logistics Corp
+
+### BAD
+- acme corp (no capitalization, informal)
+- ACME (abbreviation - use full legal name)
+- My Business (too generic)
+- test company (not a real business name)
+- asdfasdf (gibberish)
+
+---
+
+## Website Examples
+
+### GOOD
+- https://www.acmecorp.com
+- https://acme.co
+- https://shop.mybusiness.com
+
+### BAD
+- acmecorp.com (missing https://)
+- www.acmecorp.com (missing https://)
+- http://acmecorp.com (http instead of https - less trusted)
+- facebook.com/mybusiness (social media, not business website)
+- N/A (must have a website)
+
+---
+
+## Use Case Description Examples
+
+### 2FA / Security Codes
+
+**GOOD:**
+"We send one-time verification codes to users when they log in to their
+account from a new device or location. Each code is 6 digits and expires
+after 10 minutes. Users must enter this code to complete login. We send
+approximately 2-3 codes per user per month."
+
+**BAD:**
+"We send codes to users."
+
+---
+
+### Appointment Reminders
+
+**GOOD:**
+"Our dental practice sends appointment reminders to patients 24 hours before
+their scheduled appointments. Messages include the appointment date, time,
+dentist name, and office location. Patients can reply YES to confirm or
+RESCHEDULE to change their appointment. We send approximately 1-2 messages
+per patient per appointment."
+
+**BAD:**
+"Reminder messages."
+
+---
+
+### Order Notifications / E-commerce
+
+**GOOD:**
+"We send shipping and delivery updates to customers who place orders on our
+e-commerce website. Messages include: order confirmation, shipping notification
+with tracking link, out for delivery alert, and delivery confirmation.
+Customers receive 3-5 messages per order. All messages include STOP to opt out."
+
+**BAD:**
+"Order updates for our store."
+
+---
+
+### Account Notifications / Alerts
+
+**GOOD:**
+"Our banking app sends account alerts including: low balance warnings
+(when account drops below user-set threshold), large transaction alerts
+(purchases over $500), and suspicious activity notifications. Users configure
+which alerts they want in their account settings. Average 2-4 messages per
+month per user."
+
+**BAD:**
+"Bank alerts."
+
+---
+
+### Marketing / Promotions
+
+**GOOD:**
+"We send promotional messages to customers who opt-in to our SMS marketing
+list. Messages include weekly deals, flash sales, and exclusive subscriber
+discounts. We send a maximum of 4 messages per month. All messages clearly
+identify our brand and include STOP to unsubscribe. Our opt-in rate is
+approximately 15% of website visitors."
+
+**BAD:**
+"Promotions and deals."
+
+---
+
+### Customer Service / Support
+
+**GOOD:**
+"When customers submit a support ticket, they can opt to receive SMS updates
+about their ticket status. We send a message when: ticket is received,
+agent responds, and ticket is resolved. Customers can reply to the message
+to add comments to their ticket. Average 3-4 messages per support case."
+
+**BAD:**
+"Support messages."
+
+---
+
+## Sample Message Examples
+
+### 2FA Messages
+
+**GOOD:**
+"Your Acme verification code is 847291. This code expires in 10 minutes.
+If you didn't request this, ignore this message."
+
+"Acme Security: 483920 is your login code. Never share this code with anyone.
+We will never call you to ask for this code."
+
+**BAD:**
+"Code: 123456" (no context, no branding)
+"Your code" (incomplete)
+
+---
+
+### Appointment Messages
+
+**GOOD:**
+"Hi Sarah, reminder: Your appointment with Dr. Johnson is tomorrow
+(Dec 15) at 2:30 PM at Smile Dental, 123 Main St. Reply YES to confirm
+or call (555) 123-4567 to reschedule."
+
+"Acme Auto: Your oil change appointment is scheduled for Friday at 10 AM.
+See you at 456 Oak Ave. Questions? Call (555) 987-6543. Reply STOP to
+cancel text reminders."
+
+**BAD:**
+"You have an appointment tomorrow." (no details)
+"Reminder!!!" (no information)
+
+---
+
+### Order / Shipping Messages
+
+**GOOD:**
+"Your Acme order #78234 has shipped! Track it here: https://acme.co/track/78234
+Expected delivery: Dec 18. Reply STOP to opt out of shipping updates."
+
+"Acme: Your package is out for delivery today and should arrive by 8 PM.
+Someone may need to sign. Track: acme.co/t/78234"
+
+**BAD:**
+"Your order shipped" (no order number, no tracking)
+"Package coming" (too vague)
+
+---
+
+### Marketing Messages
+
+**GOOD:**
+"Acme Flash Sale! 40% off all winter items today only. Shop: acme.co/sale
+Use code WINTER40. Reply STOP to unsubscribe. Msg&data rates may apply."
+
+"Hi from Acme! As a VIP member, get early access to our Black Friday deals
+starting NOW. Shop: acme.co/bf - Reply STOP to opt out"
+
+**BAD:**
+"BIG SALE!!!! BUY NOW!!!!" (spammy, no branding, no opt-out)
+"Click here for deals" (no branding, no opt-out, vague)
+
+---
+
+### Account Alert Messages
+
+**GOOD:**
+"Acme Bank Alert: A $523.45 purchase was made on your card ending 4532 at
+Target. If this wasn't you, call (800) 555-1234 immediately."
+
+"Your Acme account balance is below $100. Current balance: $87.32.
+Set up auto-reload: acme.co/reload"
+
+**BAD:**
+"Alert" (no information)
+"Check your account" (vague, could be phishing)
+
+---
+
+## Opt-In Workflow Description Examples
+
+### Website Signup Opt-In
+
+**GOOD:**
+"During account registration on our website, users see a checkbox labeled
+'I want to receive SMS updates about my account (optional)' with additional
+text below: 'Message and data rates may apply. Approximately 2-4 msgs/month.
+Reply STOP to cancel anytime.' The checkbox is unchecked by default.
+When checked and form submitted, we store the consent timestamp, user's
+IP address, and the exact consent language shown. Users can manage SMS
+preferences anytime in their account settings."
+
+**BAD:**
+"Users sign up on our website and give us their phone number."
+
+---
+
+### Point of Sale / In-Store Opt-In
+
+**GOOD:**
+"At checkout, our staff asks customers if they'd like to receive SMS
+receipts and promotions. If yes, the customer enters their phone number
+on the PIN pad and is shown the message: 'By entering your number, you
+agree to receive SMS from Acme Store. Msg&data rates apply. ~4 msgs/month.
+Reply STOP to cancel.' The customer must tap 'I Agree' to proceed. We
+store the consent timestamp and store location."
+
+**BAD:**
+"We ask for their phone number at the register."
+
+---
+
+### Text-to-Join Opt-In
+
+**GOOD:**
+"Customers text JOIN to our shortcode 12345 to subscribe. They immediately
+receive a confirmation message: 'Thanks for joining Acme Alerts! You'll
+receive ~4 msgs/month with deals and updates. Msg&data rates apply.
+Reply HELP for help, STOP to cancel.' We don't send any marketing messages
+until they reply YES to confirm. Consent is logged with timestamp and
+phone number."
+
+**BAD:**
+"They text us to join."
+
+---
+
+### App Download Opt-In
+
+**GOOD:**
+"When users download our mobile app and create an account, they're asked
+to verify their phone number via SMS. After verification, they see a
+screen asking 'Would you like to receive SMS notifications?' with options
+for: Order Updates, Promotions, Security Alerts (each toggleable).
+Below the options: 'Msg&data rates may apply. You can change these
+preferences anytime in Settings.' Users must tap 'Enable' to opt in."
+
+**BAD:**
+"They download our app."
+
+---
+
+### Paper Form Opt-In
+
+**GOOD:**
+"Patients complete an intake form that includes a section for SMS consent.
+The form states: 'I authorize [Practice Name] to send appointment reminders
+and health-related information via text message to the phone number provided.
+Standard message rates may apply. I understand I can opt out at any time
+by texting STOP.' Patients must initial next to this section. We scan and
+store the signed consent form digitally with the patient record."
+
+**BAD:**
+"They fill out a form with their phone number."
+
+---
+
+## Screenshot Guidelines
+
+### What to Include
+
+**Registration/Signup Form Screenshots:**
+- Full form visible (not cropped)
+- SMS consent checkbox clearly visible
+- Consent text readable
+- Your business name/logo visible
+- Submit button showing
+
+**Mobile App Screenshots:**
+- Permission dialog visible
+- Explanation text readable
+- Accept/Decline buttons visible
+- App name in header
+
+**Website Popup Screenshots:**
+- Full popup visible
+- Clear opt-in language
+- Privacy link visible
+- Close/Submit buttons visible
+
+### What NOT to Submit
+
+- Blurry or low-resolution images
+- Screenshots with consent text cropped out
+- Mock-ups or designs (must be live implementation)
+- Screenshots from other companies
+- Marketing materials without opt-in mechanism
+
+---
+
+## Quick Checklist Before Submitting
+
+[ ] Business name matches exactly what's on government registration
+[ ] Website is live and shows your business name
+[ ] Business registration number (EIN/DUNS) is correct format
+[ ] Contact email matches your website domain (recommended)
+[ ] Use case description is specific (who, what, when, why)
+[ ] Sample messages are realistic and include opt-out for marketing
+[ ] Opt-in description explains how users consent and what they see
+[ ] Screenshots clearly show consent language
+[ ] Privacy policy URL works and mentions SMS
+[ ] All information is truthful and accurate
+
+---
+
+## Industry-Specific Tips
+
+### Healthcare
+- HIPAA compliance must be mentioned in opt-in
+- No PHI (protected health information) in sample messages
+- Mention patient portal or secure messaging for sensitive info
+
+### Financial Services
+- Include fraud alert and security notification examples
+- Mention compliance with financial regulations
+- Show how users manage alert preferences
+
+### E-commerce
+- Include full order lifecycle (confirmation, shipped, delivered)
+- Show tracking URL format
+- Include return/exchange notification if applicable
+
+### Real Estate
+- Property showing reminders
+- Open house notifications
+- Document signing reminders
+- New listing alerts for subscribed buyers
+
+### Restaurants / Food Service
+- Order ready notifications
+- Reservation confirmations
+- Waitlist updates
+- Loyalty program messages
+
+---
+
+For more detailed guidance, see our main Verification Guide.
+Contact support@sendly.live with questions.

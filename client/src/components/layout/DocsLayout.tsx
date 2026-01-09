@@ -99,6 +99,9 @@ const SIDE_NAV = [
     items: [
       { name: "Overview", href: "/docs/concepts" },
       { name: "Local Development", href: "/docs/concepts/local-development" },
+      { name: "Message Lifecycle", href: "/docs/concepts/message-lifecycle" },
+      { name: "Test vs Live Mode", href: "/docs/concepts/test-vs-live" },
+      { name: "Credits & Pricing", href: "/docs/concepts/credits" },
     ],
   },
 ];
