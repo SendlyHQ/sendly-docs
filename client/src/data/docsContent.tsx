@@ -6773,6 +6773,58 @@ sendly webhooks listen --forward http://localhost:3000/webhook
           </div>
         ),
       },
+      {
+        id: "pricing-tiers",
+        title: "Country Pricing Tiers",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              SMS pricing varies by destination country. We group countries into tiers based on carrier costs:
+            </p>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <table className="w-full text-sm">
+                <thead className="bg-muted">
+                  <tr>
+                    <th className="text-left p-3 font-medium">Tier</th>
+                    <th className="text-left p-3 font-medium">Credits</th>
+                    <th className="text-left p-3 font-medium">Countries</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr>
+                    <td className="p-3 font-medium text-green-500">Domestic</td>
+                    <td className="p-3">1 credit</td>
+                    <td className="p-3 text-muted-foreground">United States, Canada</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-medium text-blue-500">Tier 1</td>
+                    <td className="p-3">8 credits</td>
+                    <td className="p-3 text-muted-foreground">United Kingdom, Germany, France, Australia, Netherlands, Spain, Italy, Ireland, Sweden, Norway, Denmark, Finland, Belgium, Austria, Switzerland, New Zealand, Portugal, Singapore</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-medium text-yellow-500">Tier 2</td>
+                    <td className="p-3">12 credits</td>
+                    <td className="p-3 text-muted-foreground">Mexico, Brazil, India, Japan, South Korea, Hong Kong, Taiwan, Philippines, Malaysia, Thailand, Indonesia, Poland, Czech Republic, Hungary, Romania, South Africa, Israel, UAE, Chile, Argentina, Colombia</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-medium text-orange-500">Tier 3</td>
+                    <td className="p-3">16 credits</td>
+                    <td className="p-3 text-muted-foreground">All other supported countries</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Pricing applies per segment. A 2-segment message to a Tier 1 country costs 16 credits (8 x 2).
+            </p>
+            <div className="p-4 border border-primary/30 bg-primary/5 rounded-lg">
+              <p className="text-sm text-muted-foreground">
+                <strong className="text-primary">OTP Verification</strong> uses the same tier pricing. A verification to the UK costs 8 credits, to Brazil costs 12 credits.
+              </p>
+            </div>
+          </div>
+        ),
+      },
     ],
   },
 
