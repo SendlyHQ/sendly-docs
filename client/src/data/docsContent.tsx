@@ -2125,6 +2125,114 @@ print(f'Sent: {message.id}')`,
     "messageType": "transactional"
   }'`,
           },
+          {
+            title: "Go",
+            language: "go",
+            code: `package main
+
+import (
+    "context"
+    "fmt"
+    sendly "github.com/sendlyhq/sendly-go"
+)
+
+func main() {
+    client := sendly.New("sk_test_v1_your_key")
+
+    message, _ := client.Messages.Send(context.Background(), &sendly.SendMessageRequest{
+        To:          "+15005550000",
+        Text:        "Hello from Sendly!",
+        MessageType: "transactional",
+    })
+
+    fmt.Println("Sent:", message.ID)
+}`,
+          },
+          {
+            title: "Ruby",
+            language: "ruby",
+            code: `require 'sendly'
+
+client = Sendly::Client.new('sk_test_v1_your_key')
+
+message = client.messages.send(
+  to: '+15005550000',
+  text: 'Hello from Sendly!',
+  message_type: 'transactional'
+)
+
+puts "Sent: #{message.id}"`,
+          },
+          {
+            title: "PHP",
+            language: "php",
+            code: `<?php
+require 'vendor/autoload.php';
+
+$sendly = new Sendly\\Client('sk_test_v1_your_key');
+
+$message = $sendly->messages->send([
+    'to' => '+15005550000',
+    'text' => 'Hello from Sendly!',
+    'messageType' => 'transactional'
+]);
+
+echo "Sent: " . $message['id'];`,
+          },
+          {
+            title: "Java",
+            language: "java",
+            code: `import com.sendly.Sendly;
+import com.sendly.models.Message;
+
+public class Main {
+    public static void main(String[] args) {
+        Sendly sendly = new Sendly("sk_test_v1_your_key");
+
+        Message message = sendly.messages().send(
+            new SendMessageRequest()
+                .to("+15005550000")
+                .text("Hello from Sendly!")
+                .messageType("transactional")
+        );
+
+        System.out.println("Sent: " + message.getId());
+    }
+}`,
+          },
+          {
+            title: "C#",
+            language: "csharp",
+            code: `using Sendly;
+
+var client = new SendlyClient("sk_test_v1_your_key");
+
+var message = await client.Messages.SendAsync(new SendMessageRequest {
+    To = "+15005550000",
+    Text = "Hello from Sendly!",
+    MessageType = "transactional"
+});
+
+Console.WriteLine($"Sent: {message.Id}");`,
+          },
+          {
+            title: "Rust",
+            language: "rust",
+            code: `use sendly::Client;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new("sk_test_v1_your_key");
+
+    let message = client.messages().send(
+        SendMessageRequest::new("+15005550000", "Hello from Sendly!")
+            .message_type("transactional")
+    ).await?;
+
+    println!("Sent: {}", message.id);
+    Ok(())
+}`,
+          },
         ],
       },
       {
@@ -3066,6 +3174,207 @@ def handle_webhook():
     event = request.json
     print(f"Event: {event['type']}")
     return 'OK', 200`,
+          },
+          {
+            title: "Go Verification",
+            language: "go",
+            code: `package main
+
+import (
+    "crypto/hmac"
+    "crypto/sha256"
+    "crypto/subtle"
+    "encoding/hex"
+    "io"
+    "net/http"
+    "os"
+)
+
+func verifyWebhook(payload []byte, signature, secret string) bool {
+    mac := hmac.New(sha256.New, []byte(secret))
+    mac.Write(payload)
+    expectedSig := hex.EncodeToString(mac.Sum(nil))
+    return subtle.ConstantTimeCompare([]byte(signature), []byte(expectedSig)) == 1
+}
+
+func webhookHandler(w http.ResponseWriter, r *http.Request) {
+    payload, _ := io.ReadAll(r.Body)
+    signature := r.Header.Get("X-Sendly-Signature")
+
+    if !verifyWebhook(payload, signature, os.Getenv("WEBHOOK_SECRET")) {
+        http.Error(w, "Invalid signature", http.StatusUnauthorized)
+        return
+    }
+
+    // Process the webhook
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte("OK"))
+}`,
+          },
+          {
+            title: "Ruby Verification",
+            language: "ruby",
+            code: `require 'openssl'
+require 'rack/utils'
+
+def verify_webhook(payload, signature, secret)
+  expected_sig = OpenSSL::HMAC.hexdigest('sha256', secret, payload)
+  Rack::Utils.secure_compare(signature, expected_sig)
+end
+
+# In your webhook handler (Sinatra example)
+post '/webhooks/sendly' do
+  payload = request.body.read
+  signature = request.env['HTTP_X_SENDLY_SIGNATURE']
+
+  unless verify_webhook(payload, signature, ENV['WEBHOOK_SECRET'])
+    halt 401, 'Invalid signature'
+  end
+
+  event = JSON.parse(payload)
+  puts "Event: #{event['type']}"
+  status 200
+  'OK'
+end`,
+          },
+          {
+            title: "PHP Verification",
+            language: "php",
+            code: `<?php
+function verifyWebhook(string $payload, string $signature, string $secret): bool {
+    $expectedSig = hash_hmac('sha256', $payload, $secret);
+    return hash_equals($expectedSig, $signature);
+}
+
+// In your webhook handler
+$payload = file_get_contents('php://input');
+$signature = $_SERVER['HTTP_X_SENDLY_SIGNATURE'] ?? '';
+$secret = getenv('WEBHOOK_SECRET');
+
+if (!verifyWebhook($payload, $signature, $secret)) {
+    http_response_code(401);
+    echo 'Invalid signature';
+    exit;
+}
+
+$event = json_decode($payload, true);
+error_log("Event: " . $event['type']);
+
+http_response_code(200);
+echo 'OK';`,
+          },
+          {
+            title: "Java Verification",
+            language: "java",
+            code: `import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.MessageDigest;
+
+public class WebhookVerifier {
+    public static boolean verifyWebhook(String payload, String signature, String secret) {
+        try {
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+            byte[] hash = mac.doFinal(payload.getBytes());
+            String expectedSig = bytesToHex(hash);
+            return MessageDigest.isEqual(signature.getBytes(), expectedSig.getBytes());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) sb.append(String.format("%02x", b));
+        return sb.toString();
+    }
+}
+
+// In your Spring controller
+@PostMapping("/webhooks/sendly")
+public ResponseEntity<String> handleWebhook(
+    @RequestBody String payload,
+    @RequestHeader("X-Sendly-Signature") String signature
+) {
+    if (!WebhookVerifier.verifyWebhook(payload, signature, System.getenv("WEBHOOK_SECRET"))) {
+        return ResponseEntity.status(401).body("Invalid signature");
+    }
+    // Process webhook
+    return ResponseEntity.ok("OK");
+}`,
+          },
+          {
+            title: "C# Verification",
+            language: "csharp",
+            code: `using System.Security.Cryptography;
+using System.Text;
+
+public static class WebhookVerifier
+{
+    public static bool VerifyWebhook(string payload, string signature, string secret)
+    {
+        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
+        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+        var expectedSig = Convert.ToHexString(hash).ToLower();
+        return CryptographicOperations.FixedTimeEquals(
+            Encoding.UTF8.GetBytes(signature),
+            Encoding.UTF8.GetBytes(expectedSig)
+        );
+    }
+}
+
+// In your ASP.NET controller
+[HttpPost("/webhooks/sendly")]
+public IActionResult HandleWebhook(
+    [FromBody] JsonElement payload,
+    [FromHeader(Name = "X-Sendly-Signature")] string signature)
+{
+    var payloadStr = payload.GetRawText();
+    var secret = Environment.GetEnvironmentVariable("WEBHOOK_SECRET");
+
+    if (!WebhookVerifier.VerifyWebhook(payloadStr, signature, secret))
+        return Unauthorized("Invalid signature");
+
+    // Process webhook
+    return Ok("OK");
+}`,
+          },
+          {
+            title: "Rust Verification",
+            language: "rust",
+            code: `use hmac::{Hmac, Mac};
+use sha2::Sha256;
+use subtle::ConstantTimeEq;
+
+type HmacSha256 = Hmac<Sha256>;
+
+fn verify_webhook(payload: &[u8], signature: &str, secret: &str) -> bool {
+    let mut mac = HmacSha256::new_from_slice(secret.as_bytes())
+        .expect("HMAC can take key of any size");
+    mac.update(payload);
+    let expected = hex::encode(mac.finalize().into_bytes());
+    expected.as_bytes().ct_eq(signature.as_bytes()).into()
+}
+
+// In your Axum handler
+async fn webhook_handler(
+    headers: HeaderMap,
+    body: Bytes,
+) -> impl IntoResponse {
+    let signature = headers
+        .get("x-sendly-signature")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("");
+
+    let secret = std::env::var("WEBHOOK_SECRET").unwrap();
+
+    if !verify_webhook(&body, signature, &secret) {
+        return (StatusCode::UNAUTHORIZED, "Invalid signature");
+    }
+
+    // Process webhook
+    (StatusCode::OK, "OK")
+}`,
           },
         ],
       },
@@ -4317,6 +4626,263 @@ message = client.messages.send(
                   <li>• <strong>Direct API:</strong> Full control over UX</li>
                 </ul>
               </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: "hosted-flow",
+        title: "Hosted Flow (Recommended)",
+        content: (
+          <div className="space-y-6">
+            <p className="text-muted-foreground">
+              Let Sendly handle the entire verification UI. You just redirect users and validate the result. ~20 lines of code total.
+            </p>
+            <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-lg">
+              <p className="text-sm text-green-500">
+                <strong>Best for:</strong> Quick integration, mobile-responsive UI out of the box, no frontend work needed.
+              </p>
+            </div>
+            <h4 className="font-semibold text-foreground mt-6">How It Works</h4>
+            <div className="border border-border rounded-lg p-4 bg-secondary/20 font-mono text-xs overflow-x-auto">
+              <pre>{`Your App                    Sendly                     User
+   │                           │                         │
+   │  1. Create session        │                         │
+   │  ─────────────────────►   │                         │
+   │                           │                         │
+   │  ◄── { url: /v/ses_xxx }  │                         │
+   │                           │                         │
+   │  2. Redirect user ────────────────────────────────► │
+   │                           │                         │
+   │                           │  3. User enters phone   │
+   │                           │  4. SMS sent            │
+   │                           │  5. User enters code    │
+   │                           │  6. Verified ✓          │
+   │                           │                         │
+   │  7. Redirect back ◄───────────────────────────────  │
+   │     ?token=tok_xxx        │                         │
+   │                           │                         │
+   │  8. Validate token        │                         │
+   │  ─────────────────────►   │                         │
+   │                           │                         │
+   │  ◄── { valid, phone }     │                         │`}</pre>
+            </div>
+            <h4 className="font-semibold text-foreground mt-6">Session Parameters</h4>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <div className="divide-y divide-border">
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-primary">success_url</div>
+                  <div className="col-span-2 font-mono text-muted-foreground">string</div>
+                  <div className="col-span-7 text-muted-foreground">
+                    Redirect URL after verification. Token appended as query param.
+                    <span className="ml-2 inline-block px-1.5 py-0.5 rounded border border-red-500/30 bg-red-500/10 text-red-500 text-[10px] uppercase font-bold">Required</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-primary">cancel_url</div>
+                  <div className="col-span-2 font-mono text-muted-foreground">string</div>
+                  <div className="col-span-7 text-muted-foreground">Redirect URL if user cancels</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-primary">brand_name</div>
+                  <div className="col-span-2 font-mono text-muted-foreground">string</div>
+                  <div className="col-span-7 text-muted-foreground">Your app name shown in UI</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-primary">brand_color</div>
+                  <div className="col-span-2 font-mono text-muted-foreground">string</div>
+                  <div className="col-span-7 text-muted-foreground">Hex color for buttons (e.g., #f59e0b)</div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 p-4 text-sm">
+                  <div className="col-span-3 font-mono text-primary">metadata</div>
+                  <div className="col-span-2 font-mono text-muted-foreground">object</div>
+                  <div className="col-span-7 text-muted-foreground">Pass-through data returned on validation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+        codeBlocks: [
+          {
+            title: "Node.js",
+            language: "javascript",
+            code: `import Sendly from '@sendly/node';
+
+const sendly = new Sendly('sk_live_v1_your_key');
+
+// Step 1: Create session and redirect
+app.get('/verify-phone', async (req, res) => {
+  const session = await sendly.verify.sessions.create({
+    successUrl: 'https://yourapp.com/verified',
+    cancelUrl: 'https://yourapp.com/signup',
+    brandName: 'YourApp',
+    brandColor: '#f59e0b',
+    metadata: { userId: req.user.id }
+  });
+  res.redirect(session.url);
+});
+
+// Step 2: Validate token on callback
+app.get('/verified', async (req, res) => {
+  const result = await sendly.verify.sessions.validate({ token: req.query.token });
+  if (result.valid) {
+    await db.users.update({ where: { id: result.metadata.userId }, data: { phone: result.phone } });
+    res.redirect('/dashboard');
+  } else {
+    res.redirect('/signup?error=verification_failed');
+  }
+});`,
+          },
+          {
+            title: "Python",
+            language: "python",
+            code: `from sendly import Sendly
+
+client = Sendly('sk_live_v1_your_key')
+
+# Step 1: Create session and redirect
+@app.route('/verify-phone')
+def verify_phone():
+    session = client.verify.sessions.create(
+        success_url='https://yourapp.com/verified',
+        cancel_url='https://yourapp.com/signup',
+        brand_name='YourApp',
+        brand_color='#f59e0b',
+        metadata={'user_id': current_user.id}
+    )
+    return redirect(session.url)
+
+# Step 2: Validate token on callback
+@app.route('/verified')
+def verified():
+    result = client.verify.sessions.validate(token=request.args.get('token'))
+    if result.valid:
+        db.users.update(id=result.metadata['user_id'], phone=result.phone)
+        return redirect('/dashboard')
+    return redirect('/signup?error=verification_failed')`,
+          },
+          {
+            title: "Go",
+            language: "go",
+            code: `client := sendly.NewClient("sk_live_v1_your_key")
+
+// Step 1: Create session and redirect
+func verifyPhone(w http.ResponseWriter, r *http.Request) {
+    session, _ := client.Verify.Sessions.Create(ctx, &sendly.CreateSessionRequest{
+        SuccessURL: "https://yourapp.com/verified",
+        CancelURL:  "https://yourapp.com/signup",
+        BrandName:  "YourApp",
+        BrandColor: "#f59e0b",
+        Metadata:   map[string]interface{}{"userId": userID},
+    })
+    http.Redirect(w, r, session.URL, http.StatusFound)
+}
+
+// Step 2: Validate token on callback
+func verified(w http.ResponseWriter, r *http.Request) {
+    result, _ := client.Verify.Sessions.Validate(ctx, &sendly.ValidateRequest{
+        Token: r.URL.Query().Get("token"),
+    })
+    if result.Valid {
+        db.UpdateUserPhone(result.Metadata["userId"], result.Phone)
+        http.Redirect(w, r, "/dashboard", http.StatusFound)
+    } else {
+        http.Redirect(w, r, "/signup?error=verification_failed", http.StatusFound)
+    }
+}`,
+          },
+          {
+            title: "Ruby",
+            language: "ruby",
+            code: `client = Sendly::Client.new('sk_live_v1_your_key')
+
+# Step 1: Create session and redirect
+get '/verify-phone' do
+  session = client.verify.sessions.create(
+    success_url: 'https://yourapp.com/verified',
+    cancel_url: 'https://yourapp.com/signup',
+    brand_name: 'YourApp',
+    brand_color: '#f59e0b',
+    metadata: { user_id: current_user.id }
+  )
+  redirect session.url
+end
+
+# Step 2: Validate token on callback
+get '/verified' do
+  result = client.verify.sessions.validate(token: params[:token])
+  if result.valid?
+    User.find(result.metadata['user_id']).update(phone: result.phone)
+    redirect '/dashboard'
+  else
+    redirect '/signup?error=verification_failed'
+  end
+end`,
+          },
+          {
+            title: "PHP",
+            language: "php",
+            code: `$sendly = new Sendly\\Client('sk_live_v1_your_key');
+
+// Step 1: Create session and redirect
+$session = $sendly->verify->sessions->create([
+    'success_url' => 'https://yourapp.com/verified',
+    'cancel_url' => 'https://yourapp.com/signup',
+    'brand_name' => 'YourApp',
+    'brand_color' => '#f59e0b',
+    'metadata' => ['user_id' => $userId]
+]);
+header('Location: ' . $session['url']);
+
+// Step 2: Validate token on callback
+$result = $sendly->verify->sessions->validate($_GET['token']);
+if ($result['valid']) {
+    $db->updateUser($result['metadata']['user_id'], ['phone' => $result['phone']]);
+    header('Location: /dashboard');
+} else {
+    header('Location: /signup?error=verification_failed');
+}`,
+          },
+          {
+            title: "cURL",
+            language: "bash",
+            code: `# Step 1: Create session
+curl -X POST https://sendly.live/api/v1/verify/sessions \\
+  -H "Authorization: Bearer sk_live_v1_your_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "success_url": "https://yourapp.com/verified",
+    "cancel_url": "https://yourapp.com/signup",
+    "brand_name": "YourApp",
+    "brand_color": "#f59e0b",
+    "metadata": {"user_id": "123"}
+  }'
+
+# Response: {"id": "ses_xxx", "url": "https://sendly.live/v/ses_xxx"}
+# Redirect user to the url
+
+# Step 2: Validate token (after user completes verification)
+curl -X POST https://sendly.live/api/v1/verify/sessions/validate \\
+  -H "Authorization: Bearer sk_live_v1_your_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{"token": "tok_xxx"}'
+
+# Response: {"valid": true, "phone": "+15551234567", "metadata": {"user_id": "123"}}`,
+          },
+        ],
+      },
+      {
+        id: "direct-api",
+        title: "Direct API",
+        content: (
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Use the direct API when you need full control over the verification UX. You handle the phone input UI, code entry UI, and error states.
+            </p>
+            <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-lg">
+              <p className="text-sm text-blue-400">
+                <strong>Best for:</strong> Custom UI requirements, native mobile apps, or when you need to integrate verification into an existing flow.
+              </p>
             </div>
           </div>
         ),
